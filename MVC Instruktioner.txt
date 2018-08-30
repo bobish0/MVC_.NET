@@ -1,0 +1,143 @@
+I den här labben kommer vi att utforska MVC i .NET Core
+
+----------------------------------------------------------------
+Labb 0 - Förberedelser (Visual Studio Professional)
+----------------------------------------------------------------
+
+Hämta ner Mvc projektet från gitlab till din Projects mapp med:
+$ git clone git@git.valtech.se:talangprogrammet/Mvc.git
+Öppna Mvc.sln med Visual Studio
+
+----------------------------------------------------------------
+Labb 1 - Hello World!
+----------------------------------------------------------------
+
+1. Kompilera och kör projektet (Start without debugging, ctrl+F5)
+2. Var i koden anges att "Hello World!" ska skrivas ut?
+3. Lägg till "services.AddMvc();" i StartUp.ConfigureServices och importera
+    "Microsoft.AspNetCore.Mvc".
+4. Byt ut app.Run-anropet i StartUp.Configure mot
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+5. Skapa en mapp Controllers och lägg till en klass (shift+alt+c) HomeController
+6. Låt den nya klassen ärva från "Controller" (using Microsoft.AspNetCore.Mvc)
+7. Lägg in följande metod
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+8. Skapa en mapp Views, undermapp Home med en ny fil Index.cshtml
+9. Filen ska innehålla "<p>Hello View!</p>", kompilera och kör (ctrl+F5)
+10. Grattis, du har skapat en defaultroute, en controller och en vy!
+
+
+----------------------------------------------------------------
+Labb 2 - Shared Layout
+----------------------------------------------------------------
+
+1. Skapa en ny undermapp till Views som du döper till Shared
+2. Kopiera in _Layout.cshtml till Shared-mappen
+3. Skapa en ny fil Views/_ViewStart.cshtml med @{ Layout = "_Layout"; }
+4. Lägg till @{ ViewData["Title"] = "En titel"; } högst upp i Index.cshtml
+5. Kompilera och kör (ctrl+F5) så borde du se "© 2017 Talangprogrammet"
+6. Byt ut "Talangprogrammet" i _Layout.cshtml mot ditt eget namn och ladda om
+
+
+----------------------------------------------------------------
+Labb 3 - Model
+----------------------------------------------------------------
+
+1. Skapa en mapp som du döper till Models
+2. Skapa en klass som du döper till Project
+3. Lägg till några properties till din modell:
+
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string ProductOwner { get; set; }
+        public List<string> Team { get; set; }
+        public DateTime StartDate { get; set; }
+
+4. Gå till HomeController och ändra Index-metoden:
+
+        public ViewResult Index()
+        {
+            var project = new Project
+            {
+                Id = 1,
+                Name = "Ett projekt",
+                ProductOwner = "Ulf Sidemo",
+                Team = new List<string>
+                {
+                    "Andy", "Daniel", "Gabriel", "Gustav",
+                    "Hampus", "Joakim", "Kristofer", "Maria",
+                    "Per", "Pål", "Someya", "Tony", "Victor"
+                },
+                StartDate = new DateTime(2018, 2, 14)
+            };
+
+            return View("Index", project.Name);
+        }
+
+5. Gå till Views/Home/Index.cshtml och byt ut innehållet mot
+
+        @using Mvc.Models           BORT?
+        @model string
+
+        @{
+            ViewData["Title"] = "En titel";
+        }
+
+        <p>@Model</p>
+
+6. Kompilera och kör (ctrl+F5) så borde du se "Ett projekt"
+7. Ändra modellen till Project (i vy och controller)
+8. Skriv ut produktägarens namn, startdatumet och alla team-medlemmar i vyn
+9. Skapa en ny modell Consultant för att representera team-medlemmar och använd
+    den istället för string i Team-propertyn i Project-modellen.
+    Team = new[] {...}.Select(name => new Consultant { Name = name }).ToList();
+
+10. Modifiera vyn så att data skrivs ut korrekt igen
+
+
+----------------------------------------------------------------
+Labb 4 - Routing och Model binding
+----------------------------------------------------------------
+
+1. Skapa en ConsultantController med action Index, en vy
+    Views/Consultant/Index.cshtml och skicka med en consultant från controllern
+    till vyn
+2. Skapa en action Create med [HttpGet]-attribut, och vy Create.cshtml med
+    formulär innehållandes input-fält som matchar Consultant-modellen, antingen
+    med vanlig html eller med helper-metoder i stil med
+
+        @using (Html.BeginForm())
+        {
+            @Html.TextBox("Name");
+            <input type="submit" value="Skapa">
+        }
+
+3. I din controller, skapa en action Create med [HttpPost]-attribut och en
+    Consultant som argument (model binding). Returnera Index-vyn med denna.
+4. Verifiera att det skapas en consultant och att denna skickas vidare till
+    Index-vyn från /consultant/create
+7. Lägg till "int projectId" som ytterligare argument till din Create-action,
+    och skapa ett input-fält i Create.cshtml
+8. Kontrollera att du kan hämta både Consultant och projectId i Create
+
+----------------------------------------------------------------
+Labb 5 - Section, partial views, paginering
+----------------------------------------------------------------
+
+1. Lägg till en section i din _Layout.cshtml och ange text i en vy som skrivs
+    i denna section
+2. Bryt ut partial views från dina vyer, för tex att visa en Consultant
+3. Skapa en vy som visar alla konsulter från en hårdkodad lista om minst 10
+4. Modifiera vyn med paginering så att max 5 visas i taget

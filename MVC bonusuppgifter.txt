@@ -1,0 +1,52 @@
+----------------------------------------------------------------
+Labb 1 - Attribute routing, areas, loggning
+----------------------------------------------------------------
+
+1. Sätt attribute routing på dina actionmetoder (som avviker från default routing)
+2. Skapa en ny area med controller och vy (För mer läsning tex https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/areas)
+3. Lägg in AutoMapper och mappa objekt mellan din domänmodell och vymodell
+4. Tidigare (del 1) använde vi ViewData-objektet som alternativ till vymodell. Labba
+    med ViewBag, ViewData, TempData och Session. Prova i din Action-metod att
+    returnera med RedirectToAction, med ovanstående satta.
+5. Implementera en loggningsmodul, till exempel log4net eller NLog
+
+----------------------------------------------------------------
+Labb 2 - Autentisering, auktorisering och validering
+----------------------------------------------------------------
+
+1. Skapa en LoginController med en Index-vy och en Success-vy
+2. Skapa ett formulär med inputfält för namn och lösenord på Index-vyn
+3. Läs på om identiteter i .NET Core och hur en inloggningsfunktion skulle
+    kunna implementeras:
+    https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity
+4. Lägg till validering av att man har angivit minst 8 tecken som lösenord och
+    att man har fyllt i ett användarnamn (både på klienten och på serversidan)
+5. Labba med validering på formuläret i föregående labb, både på
+    klienten och på servern
+6. Logga varje gång som någon accessar /login/success (tips ActionFilters)
+7. Se till att man bara kan göra postningar från siten och inte via till
+    exempel Fiddler (tips Validation token eller använd html helper för att
+    skapa formuläret som i kodexemplet i 4.2)
+
+----------------------------------------------------------------
+Labb 3 - Testning
+----------------------------------------------------------------
+
+1. Läs om enhetstestning av controllers:
+    https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/testing (17 min read)
+2. Skriv enhetstester för valideringen i labb 5
+3. Läs om integrationstestning i MVC6:
+    https://docs.microsoft.com/en-us/aspnet/core/testing/integration-testing (7 min read)
+4. Skriv integrationstester för valideringen i labb 5
+
+----------------------------------------------------------------
+Labb 4 - Web API
+----------------------------------------------------------------
+
+1. Läs om skillnaden mellan MVC och Web API i ASP.NET 4.5
+    https://www.asp.net/web-api/overview/getting-started-with-aspnet-web-api/tutorial-your-first-web-api (4 min read)
+2. Läs om hur Web API förändrats i .NET Core (och lite om IoC)
+    https://docs.microsoft.com/en-us/aspnet/core/migration/webapi (6 min read)
+    https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-web-api (ASP.NET Core, 8 min read)
+
+
