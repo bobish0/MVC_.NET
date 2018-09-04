@@ -141,3 +141,11 @@ Labb 5 - Section, partial views, paginering
 2. Bryt ut partial views från dina vyer, för tex att visa en Consultant
 3. Skapa en vy som visar alla konsulter från en hårdkodad lista om minst 10
 4. Modifiera vyn med paginering så att max 5 visas i taget
+
+----------------------------------------------------------------
+Labb 6 - The end
+----------------------------------------------------------------
+
+- Du var en snabb en! 🏎️💨 
+- Hjälp din granne eller lös lite uppgifter på Code Wars: https://www.codewars.com
+
