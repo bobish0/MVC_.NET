@@ -4,6 +4,7 @@ I den här labben kommer vi att utforska MVC i .NET Core
 Labb 0 - Förberedelser (Visual Studio Professional)
 ----------------------------------------------------------------
 
+Se till att lägga in er ssh-nyckel här för att kunna klona projektet.
 Hämta ner Mvc projektet från gitlab till din Projects mapp med:
 $ git clone git@git.valtech.se:talangprogrammet/Mvc.git
 Öppna Mvc.sln med Visual Studio
