@@ -6,7 +6,7 @@ Labb 0 - Förberedelser (Visual Studio Professional)
 
 Se till att lägga in er ssh-nyckel här för att kunna klona projektet.
 Hämta ner Mvc projektet från gitlab till din Projects mapp med:
-$ git clone git@git.valtech.se:talangprogrammet/Mvc.git
+`$ git clone git@git.valtech.se:talangprogrammet/Mvc.git`
 Öppna Mvc.sln med Visual Studio
 
 ----------------------------------------------------------------
@@ -21,7 +21,7 @@ Labb 1 - Hello World!
     Det här ska vi nu byta ut mot en riktigt html-vy
 
 3. Skapa en mapp Views i projekt-roten, undermapp Home med en ny fil Index.cshtml
-4. Filen ska innehålla "<p>Hello View!</p>"
+4. Filen ska innehålla `<p>Hello View!</p>`
 5. Skapa en mapp Controllers och lägg till en klass HomeController
 6. Låt den nya klassen ärva från "Controller" för att göra det till en MVC controller
     (using Microsoft.AspNetCore.Mvc)
@@ -32,15 +32,15 @@ Labb 1 - Hello World!
 8. I Startup.cs: Lägg till "services.AddMvc();" i StartUp.ConfigureServices och importera
     "Microsoft.AspNetCore.Mvc".
 9. Byt ut app.Run-anropet i StartUp.Configure mot
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
-
-    Vad innebär det här steget?
+```csharp
+	    app.UseMvc(routes =>
+	    {
+	        routes.MapRoute(
+	            name: "default",
+	            template: "{controller=Home}/{action=Index}/{id?}");
+	    });
+```
+Vad innebär det här steget?
 
 10. Kompilera och kör (ctrl+F5 / cmd+alt+enter). Grattis, du har skapat en defaultroute, en controller och en vy!
 
@@ -53,7 +53,7 @@ Labb 2 - Shared Layout
 2. Kopiera in _Layout.cshtml till Shared-mappen
 3. Skapa en ny fil Views/_ViewStart.cshtml med @{ Layout = "_Layout"; }
 4. Kompilera och kör så borde du se "© Talangprogrammet 2019"
-5. Byt ut "Talangprogrammet" i _Layout.cshtml mot ditt eget namn och ladda om
+5. Byt ut "Talangprogrammet" i _Layout.cshtml mot ditt eget namn och ladda om.<br/>
     _ViewStart direkt under Views kommer anropas by convention i MVC men hur hänger
     _Layout ihop med din vy?
 
@@ -65,15 +65,16 @@ Labb 3 - Model
 1. Skapa en mapp i projekt-roten som du döper till Models
 2. Skapa en klass som du döper till Project
 3. Lägg till några properties till din modell:
-
+```csharp
         public int Id { get; set; }
         public string Name { get; set; }
         public string ProductOwner { get; set; }
         public List<string> Team { get; set; }
         public DateTime StartDate { get; set; }
+```
 
 4. Gå till HomeController och ändra Index-metoden:
-
+```csharp
         public ViewResult Index()
         {
             var project = new Project
@@ -93,26 +94,29 @@ Labb 3 - Model
 
             return View("Index", project.Name);
         }
+```
 
 5. Gå till Views/Home/Index.cshtml och ta in projekt-namnet genom att byta ut innehållet mot
-
+```csharp
         @model string
 
         <h1>@Model</h1>
-
+```
 
 
 6. Kompilera och kör så borde du se "Ett projekt"
 7. Ändra vymodellen till Project (i vy och controller)
 8. Skriv ut produktägarens namn, startdatumet och alla team-medlemmar i vyn
-    Razor-syntax för att skriva C# i vyn är: @{ /* C#kod */ } och @C#Variabel
+    Razor-syntax för att skriva C# i vyn är: @{ /* C#kod */ } och @Variabel
     Se lite Razor-exempel här: https://www.w3schools.com/asp/razor_syntax.asp
-    Tips: Du kan formattera datumet med t.ex. .ToString("yyyy-MM-dd")
+    Tips: Du kan formattera datumet med t.ex. `.ToString("yyyy-MM-dd")`
 
 9. Skapa en ny modell Consultant med string property Name för att representera 
-    team-medlemmar och använd den istället för string i Team-propertyn i Project-modellen.
+    team-medlemmar och använd den istället för string i Team-propertyn i Project-modellen.<br/>
     Du kan transformera namnlistan du redan har till en Consultant-lista mha LINQ:
-    Team = new List<string> {...}.Select(name => new Consultant { Name = name }).ToList();
+    ```csharp
+    Team = new List<string> {/* alla namn */}.Select(name => new Consultant { Name = name }).ToList();
+    ```
 
 10. Modifiera vyn så att data skrivs ut korrekt igen
 
@@ -128,13 +132,13 @@ Labb 4 - Routing och Model binding
 2. Skapa en action Create med [HttpGet]-attribut, och vy Create.cshtml med
     formulär innehållandes input-fält som matchar Consultant-modellen, antingen
     med vanlig html eller med helper-metoder i stil med
-
+```csharp
         @using (Html.BeginForm())
         {
             @Html.TextBox("Name");
             <input type="submit" value="Skapa">
         }
-
+```
 
 3. I din controller, skapa en action Create med [HttpPost]-attribut och en
     Consultant som argument (model binding). Returnera Index-vyn med denna.
@@ -169,13 +173,14 @@ Nu ska vi bryta ut och separera delar av logiken som vi binder ihop med Dependen
 5. I Startup.cs: sätt upp ConsultantService som en transient implementation av IConsultantService i metoden ConfigureServices.
     Vad innebär det? Vad är skillnaden på en transient och en singelton implementation?
 6. Nu kan injecta IConsultantService i HomeController genom att ta den som constructorparameter:
-
+```csharp
         private readonly IConsultantService _consultantService;
 
         public HomeController(IConsultantService consultantService)
         {
             _consultantService = consultantService;
         }
+```
 
 7. Använd _consultantService för att hämta alla konsulter och populera team-listan.
 8. Kompilera och kör så det ryker.
