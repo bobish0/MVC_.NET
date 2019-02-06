@@ -5,15 +5,17 @@ Labb 0 - Förberedelser (Visual Studio Professional)
 ----------------------------------------------------------------
 
 Se till att lägga in er ssh-nyckel här för att kunna klona projektet.
-Hämta ner Mvc projektet från gitlab till din Projects mapp med:
-`$ git clone git@git.valtech.se:talangprogrammet/Mvc.git`
+Hämta ner Mvc projektet från gitlab till din Projects mapp med något av:
+ - `git clone git@git.valtech.se:talangprogrammet/Mvc.git` [om du konfigurerat en SSH-nyckel mot GitLab](https://git.valtech.se/profile/keys) (rekommenderat)
+ - `git clone https://git.valtech.se/talangprogrammet/Mvc.git` annars
+
 Öppna Mvc.sln med Visual Studio
 
 ----------------------------------------------------------------
 Labb 1 - Hello World!
 ----------------------------------------------------------------
 
-1. Kompilera och kör projektet (Start without debugging, ctrl+F5 (Win), cmd+alt+enter (Mac))
+1. Kompilera och kör projektet (Start without debugging, <kbd>ctrl</kbd>+<kbd>F5</kbd> (Win), <kbd>⌘</kbd>+<kbd>⌥</kbd>+<kbd>⏎</kbd> (Mac))
     Om du får problem med saknade nuget-paket: 
         Högerklicka på solutionen i Solution Explorer och välj "Restore NuGet Packages"
 
@@ -42,7 +44,7 @@ Labb 1 - Hello World!
 ```
 Vad innebär det här steget?
 
-10. Kompilera och kör (ctrl+F5 / cmd+alt+enter). Grattis, du har skapat en defaultroute, en controller och en vy!
+10. Kompilera och kör (<kbd>ctrl</kbd>+<kbd>F5</kbd> (Win), <kbd>⌘</kbd>+<kbd>⌥</kbd>+<kbd>⏎</kbd> (Mac)). Grattis, du har skapat en defaultroute, en controller och en vy!
 
 
 ----------------------------------------------------------------
