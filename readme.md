@@ -192,4 +192,4 @@ Labb 7 - The end
 ----------------------------------------------------------------
 
 - Du var en snabb en! 🏎️💨 
-- Hjälp din granne eller lös lite uppgifter på Exercism: https://exercism.io/tracks/csharp/exercises
+- Hjälp din granne, gå tillbaks till gamla labbar eller lös lite uppgifter på Exercism: https://exercism.io/tracks/csharp/exercises
