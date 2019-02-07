@@ -146,10 +146,10 @@ Labb 4 - Routing och Model binding
     Consultant som argument (model binding). Returnera Index-vyn med denna.
 4. Testkör och gå till /consultant/create skapa en ny konsult och verifiera att denna skickas vidare till
     Index-vyn. Varför har vi två Create-metoder, vad är skillnaderna och hur vet vi vilken som ska köras när?
-7. Lägg till "int projectId" som ytterligare argument till din Create-action,
-    och skapa ett input-fält i Create.cshtml
-8. Debugga och kontrollera att du kan se både Consultant och projectId i Create. 
-    Vad händer om du som användare skriver in något som inte är en int i formuläret?
+7. Lägg till `int projectId` som ytterligare argument till din Create-action,
+    och skapa ett input-fält i Create.cshtml för just `projectId`. Du behöver inte använda projectId till något i controllern eller modellen.
+8. Kör i debug-läge (<kbd>⌘</kbd>+<kbd>⏎</kbd>) med en breakpoint i Create-metoden och kontrollera att du kan se både Consultant och projectId i Create. 
+    Vad händer om du som användare skriver in något som inte är en int i formuläret, varför?
 
 ----------------------------------------------------------------
 Labb 5 - Section, partial views, paginering
