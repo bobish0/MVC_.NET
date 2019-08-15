@@ -1,23 +1,21 @@
 I den här labben kommer vi att utforska MVC i .NET Core
 
 ----------------------------------------------------------------
-Labb 0 - Förberedelser (Visual Studio Professional)
+Labb 0 - Förberedelser
 ----------------------------------------------------------------
 
-Se till att lägga in er ssh-nyckel här för att kunna klona projektet.
-Hämta ner Mvc projektet från gitlab till din Projects mapp med något av:
- - `git clone git@git.valtech.se:talangprogrammet/Mvc.git` [om du konfigurerat en SSH-nyckel mot GitLab](https://git.valtech.se/profile/keys) (rekommenderat)
- - `git clone https://git.valtech.se/talangprogrammet/Mvc.git` annars
+Klona projektet med `git clone` till en lämplig mapp. Använd knappen "Clone" på Gitlab och kopiera lämplig url.
 
-Öppna Mvc.sln med Visual Studio
+Öppna Mvc.sln med Visual Studio.
 
 ----------------------------------------------------------------
 Labb 1 - Hello World!
 ----------------------------------------------------------------
 
-1. Kompilera och kör projektet (Start without debugging, <kbd>ctrl</kbd>+<kbd>F5</kbd> (Win), <kbd>⌘</kbd>+<kbd>⌥</kbd>+<kbd>⏎</kbd> (Mac))
-    Om du får problem med saknade nuget-paket: 
-        Högerklicka på solutionen i Solution Explorer och välj "Restore NuGet Packages"
+1. Kompilera och kör projektet (Start without debugging, <kbd>ctrl</kbd>+<kbd>F5</kbd> 
+[Win], <kbd>⌘</kbd>+<kbd>⌥</kbd>+<kbd>⏎</kbd> [Mac])
+    
+    Om du får problem med saknade nuget-paket: Högerklicka på solutionen i Solution Explorer och välj "Restore NuGet Packages"
 
 2. Var i koden anges att "Hello World!" ska skrivas ut?
     Det här ska vi nu byta ut mot en riktigt html-vy
@@ -52,7 +50,7 @@ Labb 2 - Shared Layout
 ----------------------------------------------------------------
 
 1. Skapa en ny undermapp till Views som du döper till Shared
-2. Kopiera in _Layout.cshtml till Shared-mappen
+2. Kopiera över filen _Layout.cshtml till Shared-mappen
 3. Skapa en ny fil Views/_ViewStart.cshtml med @{ Layout = "_Layout"; }
 4. Kompilera och kör så borde du se "© Talangprogrammet 2019"
 5. Byt ut "Talangprogrammet" i _Layout.cshtml mot ditt eget namn och ladda om.<br/>
@@ -86,12 +84,14 @@ Labb 3 - Model
                 ProductOwner = "Ulf Sidemo",
                 Team = new List<string>
                 {
-                    "Karin Melin", "Sebastian Lhådö", "David  Bragmark", "Tim Kulich",
-                    "Josef Hansson Karakoca", "David Wajngot", "Johannes Almroth", "Adam Woods",
-                    "Nurhussen Saleh", "Jesper Saxer", "Malin von Matern", "Anton Carlsson", 
-                    "Jesper Svennebring", "Robin Rosberg"
+                    "Johan Thornström", "Rickard Jeppsson", "Petter Tasola Kullander",
+                    "Christian Gullberg", "Fredrik Eklööf", "Per Gustavsson",
+                    "Ahmed Bihi", "Yuchen Che", "Clarissa Hedenqvist",
+                    "Anastasiia Valdemaiier", "Robert Carlsson", "Lucas Grönborg",
+                    "Simon Scott", "David Tranaeus",
+                    "Olof Berg Marklund", "Petra Olsson"
                 },
-                StartDate = new DateTime(2019, 2, 6)
+                StartDate = new DateTime(2019, 9, 2)
             };
 
             return View("Index", project.Name);
@@ -105,16 +105,18 @@ Labb 3 - Model
         <h1>@Model</h1>
 ```
 
-
 6. Kompilera och kör så borde du se "Ett projekt"
 7. Ändra vymodellen till Project (i vy och controller)
-8. Skriv ut produktägarens namn, startdatumet och alla team-medlemmar i vyn
-    Razor-syntax för att skriva C# i vyn är: @{ /* C#kod */ } och @Variabel
+8. Skriv ut produktägarens namn, startdatumet och alla team-medlemmar i vyn.
+
+    Razor-syntax för att skriva C# i vyn är: @{ /* C#kod */ } och @Variabel.
     Se lite Razor-exempel här: https://www.w3schools.com/asp/razor_syntax.asp
+
     Tips: Du kan formattera datumet med t.ex. `.ToString("yyyy-MM-dd")`
 
 9. Skapa en ny modell Consultant med string property Name för att representera 
-    team-medlemmar och använd den istället för string i Team-propertyn i Project-modellen.<br/>
+    team-medlemmar och använd den istället för string i Team-propertyn i Project-modellen.
+    
     Du kan transformera namnlistan du redan har till en Consultant-lista mha LINQ:
     ```csharp
     Team = new List<string> {/* alla namn */}.Select(name => new Consultant { Name = name }).ToList();
@@ -122,12 +124,38 @@ Labb 3 - Model
 
 10. Modifiera vyn så att data skrivs ut korrekt igen
 
-
 ----------------------------------------------------------------
-Labb 4 - Routing och Model binding
+Labb 4 - Dependency Injection
 ----------------------------------------------------------------
 
-1. Skapa en ConsultantController med action Index, en vy
+Nu ska vi bryta ut och separera delar av logiken som vi binder ihop med Dependency Injection.
+
+1. Skapa en mapp Services i projekt-roten och lägg till en fil ConsultantService.cs med klassen ConsultantService
+2. Skapa interfacet IConsultantService (skapa en ny fil eller lägg det i samma) med
+    funktionen GetAllConsultants() som returnerar en lista av Consultant.
+3. Låt ConsultantService implementera ditt interface
+4. Kopiera konsult-listan från HomeController och gör så att GetAllConsultants() returnerar den.
+5. I Startup.cs: sätt upp ConsultantService som en transient implementation av IConsultantService i metoden ConfigureServices. Tips: Du borde börja i metoden ConfigureServices i Startup.cs.
+
+    Vad innebär det? Vad är skillnaden på en transient och en singelton implementation?
+
+6. Nu kan injecta IConsultantService i HomeController genom att ta den som constructorparameter:
+```csharp
+        private readonly IConsultantService _consultantService;
+
+        public HomeController(IConsultantService consultantService)
+        {
+            _consultantService = consultantService;
+        }
+```
+
+7. Använd _consultantService för att hämta alla konsulter och populera team-listan.
+8. Kompilera och kör så det ryker.
+----------------------------------------------------------------
+Labb 5 - Routing och Model binding
+----------------------------------------------------------------
+
+1. Skapa en ny controller ConsultantController med action Index, en vy
     Views/Consultant/Index.cshtml och skicka med en consultant från controllern
     till vyn som skriver ut konsulten. Testkör.
 
@@ -148,47 +176,23 @@ Labb 4 - Routing och Model binding
     Index-vyn. Varför har vi två Create-metoder, vad är skillnaderna och hur vet vi vilken som ska köras när?
 7. Lägg till `int projectId` som ytterligare argument till din Create-action,
     och skapa ett input-fält i Create.cshtml för just `projectId`. Du behöver inte använda projectId till något i controllern eller modellen.
-8. Kör i debug-läge (<kbd>⌘</kbd>+<kbd>⏎</kbd>) med en breakpoint i Create-metoden och kontrollera att du kan se både Consultant och projectId i Create. 
+8. Kör i debug-läge (<kbd>F5</kbd> [Win], <kbd>⌘</kbd>+<kbd>⏎</kbd> [Mac]) med en breakpoint i Create-metoden och kontrollera att du kan se både Consultant och projectId i Create. 
+
     Vad händer om du som användare skriver in något som inte är en int i formuläret, varför?
 
 ----------------------------------------------------------------
-Labb 5 - Section, partial views, paginering
+Labb 6 - Section, partial views, paginering
 ----------------------------------------------------------------
 
-1. Lägg till en section i din _Layout.cshtml (@RenderSection) och ange text i en vy som skrivs
-    i denna section
-2. Bryt ut renderingen av team-medlemmar i Home-vyn till en partial view som renderar ut en Consultant.
+1. Bryt ut renderingen av team-medlemmar i Home-vyn till en partial view som renderar ut en Consultant.
+
     Som namnkonvention börjar partiella vyer med '_' t.ex. _Consultant.cshtml
+
+2. Lägg till en section i din _Layout.cshtml (@RenderSection) och ange text i en vy som skrivs i denna section
 3. Hur skiljer sig sektioner från partiella vyer och vad har de för användningsområden?
 
 ----------------------------------------------------------------
-Labb 6 - Dependency Injection
-----------------------------------------------------------------
-
-Nu ska vi bryta ut och separera delar av logiken som vi binder ihop med Dependency Injection.
-
-1. Skapa en mapp Services i projekt-roten och lägg till en fil ConsultantService.cs med klassen ConsultantService
-2. Skapa interfacet IConsultantService (skapa en ny fil eller lägg det i samma) med
-    funktionen GetAllConsultants() som returnerar en lista av Consultant.
-3. Låt ConsultantService implementera ditt interface
-4. Kopiera konsult-listan från HomeController och gör så att GetAllConsultants() returnerar den.
-5. I Startup.cs: sätt upp ConsultantService som en transient implementation av IConsultantService i metoden ConfigureServices.
-    Vad innebär det? Vad är skillnaden på en transient och en singelton implementation?
-6. Nu kan injecta IConsultantService i HomeController genom att ta den som constructorparameter:
-```csharp
-        private readonly IConsultantService _consultantService;
-
-        public HomeController(IConsultantService consultantService)
-        {
-            _consultantService = consultantService;
-        }
-```
-
-7. Använd _consultantService för att hämta alla konsulter och populera team-listan.
-8. Kompilera och kör så det ryker.
-
-----------------------------------------------------------------
-Labb 7 - The end
+The end
 ----------------------------------------------------------------
 
 - Du var en snabb en! 🏎️💨 
