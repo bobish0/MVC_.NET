@@ -85,9 +85,9 @@ Labb 3 - Model
                 Team = new List<string>
                 {
                     "Johan Thornström", "Rickard Jeppsson", "Petter Tasola Kullander",
-                    "Christian Gullberg", "Fredrik Eklööf", "Per Gustavsson",
-                    "Ahmed Bihi", "Yuchen Che", "Clarissa Hedenqvist",
-                    "Anastasiia Valdemaiier", "Robert Carlsson", "Lucas Grönborg",
+                    "Fredrik Eklööf", "Per Gustavsson", "Ahmed Bihi", 
+                    "Yuchen Che", "Clarissa Hedenqvist", "Anastasiia Valdemaiier", 
+                    "Robert Carlsson", "Lucas Grönborg",
                     "Simon Scott", "David Tranaeus",
                     "Olof Berg Marklund", "Petra Olsson"
                 },
