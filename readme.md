@@ -26,11 +26,12 @@ Labb 1 - Hello World!
 6. Låt den nya klassen ärva från "Controller" för att göra det till en MVC controller
     (using Microsoft.AspNetCore.Mvc)
 
-7. Lägg in en publik metod Index med returtyp IActionResult som returnerar vyn i steg 5 mha View().
+7. Lägg in en publik metod Index med returtyp IActionResult som returnerar vyn i steg 5, (med hjälp av View()).
     Hur vet projektet vilken vy den ska returnera?
 
-8. I Startup.cs: Lägg till "services.AddMvc();" i StartUp.ConfigureServices och importera
-    "Microsoft.AspNetCore.Mvc".
+8. I Startup.cs: Lägg till `services.AddMvc();` i StartUp.ConfigureServices och importera
+    `Microsoft.AspNetCore.Mvc`.
+
 9. Byt ut app.Run-anropet i StartUp.Configure mot
 ```csharp
 	    app.UseMvc(routes =>
@@ -51,12 +52,11 @@ Labb 2 - Shared Layout
 
 1. Skapa en ny undermapp till Views som du döper till Shared
 2. Kopiera över filen _Layout.cshtml till Shared-mappen
-3. Skapa en ny fil Views/_ViewStart.cshtml med @{ Layout = "_Layout"; }
+3. Skapa en ny fil Views/_ViewStart.cshtml med `@{ Layout = "_Layout"; }`
 4. Kompilera och kör så borde du se "© Talangprogrammet 2019"
-5. Byt ut "Talangprogrammet" i _Layout.cshtml mot ditt eget namn och ladda om.<br/>
-    _ViewStart direkt under Views kommer anropas by convention i MVC men hur hänger
+5. Byt ut "Talangprogrammet" i _Layout.cshtml mot ditt eget namn och ladda om.<br>
+    _ViewStart direkt under Views kommer anropas av konvention i MVC men hur hänger
     _Layout ihop med din vy?
-
 
 ----------------------------------------------------------------
 Labb 3 - Model
@@ -85,9 +85,9 @@ Labb 3 - Model
                 Team = new List<string>
                 {
                     "Johan Thornström", "Rickard Jeppsson", "Petter Tasola Kullander",
-                    "Christian Gullberg", "Fredrik Eklööf", "Per Gustavsson",
-                    "Ahmed Bihi", "Yuchen Che", "Clarissa Hedenqvist",
-                    "Anastasiia Valdemaiier", "Robert Carlsson", "Lucas Grönborg",
+                    "Fredrik Eklööf", "Per Gustavsson", "Ahmed Bihi", 
+                    "Yuchen Che", "Clarissa Hedenqvist", "Anastasiia Valdemaiier", 
+                    "Robert Carlsson", "Lucas Grönborg",
                     "Simon Scott", "David Tranaeus",
                     "Olof Berg Marklund", "Petra Olsson"
                 },
@@ -106,7 +106,9 @@ Labb 3 - Model
 ```
 
 6. Kompilera och kör så borde du se "Ett projekt"
-7. Ändra vymodellen till Project (i vy och controller)
+7. Just nu skickar vi bara titeln på projektet till vyn, men nu ska vi ändra det! 
+    Ändra i controllern och vyn så vi skickar och tar emot hela Project-objektet.
+
 8. Skriv ut produktägarens namn, startdatumet och alla team-medlemmar i vyn.
 
     Razor-syntax för att skriva C# i vyn är: @{ /* C#kod */ } och @Variabel.
@@ -132,14 +134,14 @@ Nu ska vi bryta ut och separera delar av logiken som vi binder ihop med Dependen
 
 1. Skapa en mapp Services i projekt-roten och lägg till en fil ConsultantService.cs med klassen ConsultantService
 2. Skapa interfacet IConsultantService (skapa en ny fil eller lägg det i samma) med
-    funktionen GetAllConsultants() som returnerar en lista av Consultant.
-3. Låt ConsultantService implementera ditt interface
-4. Kopiera konsult-listan från HomeController och gör så att GetAllConsultants() returnerar den.
-5. I Startup.cs: sätt upp ConsultantService som en transient implementation av IConsultantService i metoden ConfigureServices. Tips: Du borde börja i metoden ConfigureServices i Startup.cs.
+    signaturen för en funktion GetAllConsultants() som returnerar en lista av Consultant.
+3. Låt ConsultantService implementera ditt interface. Kopiera sen konsult-listan från HomeController och gör så att GetAllConsultants() returnerar den.
+4. I Startup.cs: sätt upp ConsultantService som en transient implementation av IConsultantService i metoden ConfigureServices. Tips: Du borde börja i metoden ConfigureServices i Startup.cs.
 
     Vad innebär det? Vad är skillnaden på en transient och en singelton implementation?
 
-6. Nu kan injecta IConsultantService i HomeController genom att ta den som constructorparameter:
+5. Nu kan du lägga till IConsultantService som ett beroende till HomeController. Det gör du genom att lägga till IConsultantService som parameter i konsturktorn. 
+    Om all konfiguration blivit rätt kommer dependency injection-ramverket nu skapa upp en ny instans av ConsultantService så fort den behövs av HomeController.
 ```csharp
         private readonly IConsultantService _consultantService;
 
@@ -149,8 +151,8 @@ Nu ska vi bryta ut och separera delar av logiken som vi binder ihop med Dependen
         }
 ```
 
-7. Använd _consultantService för att hämta alla konsulter och populera team-listan.
-8. Kompilera och kör så det ryker.
+6. Använd _consultantService för att hämta alla konsulter och populera team-listan.
+7. Kompilera och kör så det ryker.
 ----------------------------------------------------------------
 Labb 5 - Routing och Model binding
 ----------------------------------------------------------------
