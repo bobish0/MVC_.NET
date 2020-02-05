@@ -29,17 +29,14 @@ Labb 1 - Hello World!
 7. Lägg in en publik metod Index med returtyp IActionResult som returnerar vyn i steg 5, (med hjälp av View()).
     Hur vet projektet vilken vy den ska returnera?
 
-8. I Startup.cs: Lägg till `services.AddMvc();` i StartUp.ConfigureServices och importera
-    `Microsoft.AspNetCore.Mvc`.
+8. I Startup.cs: Lägg till `services.AddControllersWithViews();` i StartUp.ConfigureServices.
 
-9. Byt ut app.Run-anropet i StartUp.Configure mot
+9. Byt ut app.UseEndpoints-anropet i StartUp.Configure mot
 ```csharp
-	    app.UseMvc(routes =>
-	    {
-	        routes.MapRoute(
-	            name: "default",
-	            template: "{controller=Home}/{action=Index}/{id?}");
-	    });
+	    app.UseEndpoints(endpoints =>
+		{
+		    endpoints.MapDefaultControllerRoute();
+		});
 ```
 Vad innebär det här steget?
 
@@ -53,7 +50,7 @@ Labb 2 - Shared Layout
 1. Skapa en ny undermapp till Views som du döper till Shared
 2. Kopiera över filen _Layout.cshtml till Shared-mappen
 3. Skapa en ny fil Views/_ViewStart.cshtml med `@{ Layout = "_Layout"; }`
-4. Kompilera och kör så borde du se "© Talangprogrammet 2019"
+4. Kompilera och kör så borde du se "© Talangprogrammet 2020"
 5. Byt ut "Talangprogrammet" i _Layout.cshtml mot ditt eget namn och ladda om.<br>
     _ViewStart direkt under Views kommer anropas av konvention i MVC men hur hänger
     _Layout ihop med din vy?
@@ -84,12 +81,18 @@ Labb 3 - Model
                 ProductOwner = "Ulf Sidemo",
                 Team = new List<string>
                 {
-                    "Johan Thornström", "Rickard Jeppsson", "Petter Tasola Kullander",
-                    "Fredrik Eklööf", "Per Gustavsson", "Ahmed Bihi", 
-                    "Yuchen Che", "Clarissa Hedenqvist", "Anastasiia Valdemaiier", 
-                    "Robert Carlsson", "Lucas Grönborg",
-                    "Simon Scott", "David Tranaeus",
-                    "Olof Berg Marklund", "Petra Olsson"
+                    "Daniel Johnsson",
+                    "Emma Nilsson",
+                    "Christian Ormos",
+                    "Christopher Ekfeldt",
+                    "Max Dagerbratt",
+                    "Elina Lundberg ",
+                    "Leif Tysell Sundkvist",
+                    "Axel Weinz",
+                    "Matilda Trodin",
+                    "Andreas Ivarsson",
+                    "Erik Ohlsson",
+                    "Thujeepan Varatharajah"
                 },
                 StartDate = new DateTime(2019, 9, 2)
             };
