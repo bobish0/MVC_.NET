@@ -50,7 +50,7 @@ Labb 2 - Shared Layout
 1. Skapa en ny undermapp till Views som du döper till Shared
 2. Kopiera över filen _Layout.cshtml till Shared-mappen
 3. Skapa en ny fil Views/_ViewStart.cshtml med `@{ Layout = "_Layout"; }`
-4. Kompilera och kör så borde du se "© Talangprogrammet 2020"
+4. Kompilera och kör så borde du se "© Talangprogrammet 2021"
 5. Byt ut "Talangprogrammet" i _Layout.cshtml mot ditt eget namn och ladda om.<br>
     _ViewStart direkt under Views kommer anropas av konvention i MVC men hur hänger
     _Layout ihop med din vy?
