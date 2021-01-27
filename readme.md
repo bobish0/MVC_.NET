@@ -31,7 +31,14 @@ Labb 1 - Hello World!
 
 8. I Startup.cs: Lägg till `services.AddControllersWithViews();` i StartUp.ConfigureServices.
 
-9. Byt ut app.UseEndpoints-anropet i StartUp.Configure mot
+9. (Frivilligt men rekommenderat för att kunna göra ändringar i vyn utan att bygga om.) Högerklicka på Solution 'Mvc' i Solution Explorer
+Välj "Manage NuGet Packages for solution".
+Välj Browse.
+Sök efter "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation".
+Installera.
+i StartUp.ConfigureServices byt `services.AddControllersWithViews();` till `services.AddControllersWithViews().AddRazorRuntimeCompilation();`
+
+10. Byt ut app.UseEndpoints-anropet i StartUp.Configure mot
 ```csharp
 	    app.UseEndpoints(endpoints =>
 		{
@@ -40,7 +47,7 @@ Labb 1 - Hello World!
 ```
 Vad innebär det här steget?
 
-10. Kompilera och kör (<kbd>ctrl</kbd>+<kbd>F5</kbd> (Win), <kbd>⌘</kbd>+<kbd>⌥</kbd>+<kbd>⏎</kbd> (Mac)). Grattis, du har skapat en defaultroute, en controller och en vy!
+11. Kompilera och kör (<kbd>ctrl</kbd>+<kbd>F5</kbd> (Win), <kbd>⌘</kbd>+<kbd>⌥</kbd>+<kbd>⏎</kbd> (Mac)). Grattis, du har skapat en defaultroute, en controller och en vy!
 
 
 ----------------------------------------------------------------
