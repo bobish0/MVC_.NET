@@ -81,18 +81,9 @@ Labb 3 - Model
                 ProductOwner = "Ulf Sidemo",
                 Team = new List<string>
                 {
-                    "Daniel Johnsson",
-                    "Emma Nilsson",
-                    "Christian Ormos",
-                    "Christopher Ekfeldt",
-                    "Max Dagerbratt",
-                    "Elina Lundberg ",
-                    "Leif Tysell Sundkvist",
-                    "Axel Weinz",
-                    "Matilda Trodin",
-                    "Andreas Ivarsson",
-                    "Erik Ohlsson",
-                    "Thujeepan Varatharajah"
+                    "Anna Andersson",
+                    "Per Persson",
+                    "Oskar Oskarsson"
                 },
                 StartDate = new DateTime(2019, 9, 2)
             };
