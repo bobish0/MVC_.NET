@@ -4,7 +4,7 @@ I den här labben kommer vi att utforska MVC i .NET Core
 Labb 0 - Förberedelser
 ----------------------------------------------------------------
 
-1. Klona projektet med `git clone` till en lämplig mapp. Använd knappen "Clone" på Gitlab och kopiera lämplig url. (Får du problem här kan du behöva lägga till en SSH-nyckel för din dator hos Gitlab, läs mer: https://docs.gitlab.com/ee/ssh/)
+1. Klona projektet med `git clone` till en lämplig mapp. Använd knappen "Clone" på Bitbucket och kopiera lämplig url. (Får du problem här kan du behöva lägga till en SSH-nyckel för din dator hos Gitlab, läs mer: https://support.atlassian.com/bitbucket-cloud/docs/set-up-an-ssh-key/)
 
 2. Öppna Mvc.sln med Visual Studio.
 
