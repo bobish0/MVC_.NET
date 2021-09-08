@@ -185,13 +185,21 @@ Labb 5 - Routing och Model binding
    Vad händer om du som användare skriver in något som inte är en int i formuläret, varför?
 
 ----------------------------------------------------------------
-Labb 6 - Section, partial views, paginering
+Labb 6 - Partial views & Sections
 ----------------------------------------------------------------
 
-1. Bryt ut renderingen av team-medlemmar i `Home`-vyn till en partial view som renderar ut en `Consultant`.
-   Som namnkonvention börjar partiella vyer med `_` t.ex. `_Consultant.cshtml`.
-2. Lägg till en sektion i din `_Layout.cshtml` (`@RenderSection`) och ange text i en vy som skrivs i denna sektion.
-3. Hur skiljer sig sektioner från partiella vyer och vad har de för användningsområden?
+### Partial Views
+1. Bryt ut rendreringen av team-medlemmar i `Index`-vyn till en partial view som renderar __en__ `Consultant`.
+   Loopen måste alltså vara kvar i `Index`. Som namnkonvention börjar partiella vyer med `_` t.ex. `_Consultant.cshtml`.
+2. Du måste också hitta ett sätt att "anropa" den partiella vyn från `Index`-vyn.
+   Tips: `Html.RenderPartial` eller `await Html.RenderPartialAsync`.
+
+### Sections
+2. I `_Layout.cshtml`, lägg till referens till sektion (tips: `@RenderSection` t.ex. i footer).
+3. I en vanlig vy, lägg till en sektion som skriver en text.
+4. Kör. Nu ska texten synas på det ställe du angav i layout-vyn.
+
+Hur skiljer sig sektioner från partiella vyer och vad har de för användningsområden?
 
 ----------------------------------------------------------------
 The end
