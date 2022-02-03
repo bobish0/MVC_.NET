@@ -1,4 +1,4 @@
-I den här labben kommer vi att utforska MVC i .NET Core
+I den här labben kommer vi att utforska ASP.NET Core MVC.
 
 ----------------------------------------------------------------
 Labb 0 - Förberedelser
