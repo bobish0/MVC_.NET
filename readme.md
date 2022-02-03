@@ -202,6 +202,12 @@ Labb 6 - Partial views & Sections
 Hur skiljer sig sektioner från partiella vyer och vad har de för användningsområden?
 
 ----------------------------------------------------------------
+Bonus Labb 7 - Razor Pages
+----------------------------------------------------------------
+
+1. Konvertera din MVC app till Razor Pages! Se https://docs.microsoft.com/en-us/aspnet/core/razor-pages/
+
+----------------------------------------------------------------
 The end
 ----------------------------------------------------------------
 
