@@ -1,3 +1,5 @@
+Scroll down for english instructions.
+
 I den här labben kommer vi att utforska ASP.NET Core MVC.
 
 ----------------------------------------------------------------
@@ -17,7 +19,7 @@ Labb 1 - Hello World!
    Om du får problem med saknade nuget-paket: Högerklicka på lösningen i Solution Explorer och välj "Restore NuGet Packages"
 3. Var i koden anges att "Hello World!" ska skrivas ut?
    Det här ska vi nu byta ut mot en riktigt html-vy.
-4. Skapa en mapp Views i projekt-roten, undermapp `Home` med en ny fil `Index.cshtml`.
+4. Skapa en mapp `Views` i projekt-roten, undermapp `Home` med en ny fil `Index.cshtml`.
 5. Filen ska innehålla `<p>Hello View!</p>`
 6. Skapa en mapp `Controllers` och lägg till en klass `HomeController`.
 7. Låt den nya klassen ärva från `Controller`för att göra det till en MVC controller
@@ -32,7 +34,7 @@ Labb 1 - Hello World!
    Sök efter `Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation`.
    Installera.
    I `StartUp.ConfigureServices` byt `services.AddControllersWithViews();` till `services.AddControllersWithViews().AddRazorRuntimeCompilation();`
-11. Byt ut `app.UseEndpoints``-anropet i StartUp.Configure mot
+11. Byt ut `app.UseEndpoints`-anropet i StartUp.Configure mot
 ```csharp
 app.UseEndpoints(endpoints =>
 {
@@ -51,7 +53,7 @@ Labb 2 - Shared Layout
 1. Skapa en ny undermapp till `Views` som du döper till `Shared`.
 2. Kopiera över filen `_Layout.cshtml` till `Shared`-mappen.
 3. Skapa en ny fil `Views/_ViewStart.cshtml` med `@{ Layout = "_Layout"; }`
-4. Kompilera och kör så borde du se "© Talangprogrammet 2021"
+4. Kompilera och kör så borde du se "© Talangprogrammet 2022"
 5. Byt ut "Talangprogrammet" i _Layout.cshtml mot ditt eget namn och ladda om.<br>
     `_ViewStart` direkt under `Views` kommer anropas av konvention i MVC men hur hänger
     `_Layout` ihop med din vy?
@@ -213,3 +215,216 @@ The end
 
 - Du var en snabb en! 🏎️💨 
 - Hjälp din granne, gå tillbaks till gamla labbar eller lös lite uppgifter på Exercism: https://exercism.io/tracks/csharp/exercises
+
+----------------------------------------------------------------
+Lab 0 - Preparations
+----------------------------------------------------------------
+
+1. Clone the project with `git clone` to a suitable folder. Use the "Clone" button on Bitbucket and copy the appropriate url. (If you have problems here, you may need to add an SSH key for your computer at Gitlab, read more: https://support.atlassian.com/bitbucket-cloud/docs/set-up-an-ssh-key/)
+
+2. Open Mvc.sln with Visual Studio.
+
+----------------------------------------------------------------
+Lab 1 - Hello World!
+----------------------------------------------------------------
+
+1. If you are running Visual Studio, below the menu bar, select configuration Debug, Any CPU, Mvc (not IIS Express).
+2. Compile and run the project (Start debugging, <kbd>F5</kbd> or <kbd>⌘</kbd> + <kbd>⏎</kbd>).
+   If you have problems with missing nuget packages: Right-click on the solution in Solution Explorer and select "Restore NuGet Packages"
+3. Where in the code is it stated that "Hello World!" should be printed?
+   We will now replace this with a real html view.
+4. Create a folder `Views` in the project root, subfolder `Home` with a new file `Index.cshtml`.
+5. The file should contain `<p>Hello View!</p>`
+6. Create a `Controllers` folder and add a` HomeController` class.
+7. Let the new class inherit from `Controller` to make it an MVC controller
+   (`using Microsoft.AspNetCore.Mvc`)
+8. Enter a public method Index with return type `IActionResult` that returns the view in step 5 (using `View()`).
+   How does the project know which view to return?
+9. In `StartUp.ConfigureServices`, add `services.AddControllersWithViews();`.
+10. Voluntary but recommended to be able to make changes to the view without rebuilding:
+   Right-click on Solution 'Mvc' in Solution Explorer.
+   Select "Manage NuGet Packages for solution".
+   Select Browse.
+   Search for `Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation`.
+   Install.
+   In `StartUp.ConfigureServices`, switch `services.AddControllersWithViews();` to `services.AddControllersWithViews().AddRazorRuntimeCompilation();`
+11. Replace the `app.UseEndpoints` call in StartUp.Configure with
+```csharp
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapDefaultControllerRoute();
+});
+```
+What does this step mean?
+
+12. Compile and run. Congratulations, you have created a default route, a controller and a view!
+
+----------------------------------------------------------------
+Lab 2 - Shared Layout
+----------------------------------------------------------------
+
+1. Create a new subfolder for `Views` which you name `Shared`.
+2. Copy the file `_Layout.cshtml` to the `Shared` folder.
+3. Create a new file `Views/_ViewStart.cshtml` with `@{ Layout = "_Layout"; }`
+4. Compile and run and you should see "© Talent Program 2022"
+5. Replace the "Talent Program" in _Layout.cshtml with your own name and reload.<br>
+    `_ViewStart` directly under` Views` will be called by convention in MVC but how does
+    `_Layout` hang along with your view?
+
+----------------------------------------------------------------
+Lab 3 - Model
+----------------------------------------------------------------
+
+1. Create a folder in the project root that you name `Models`.
+2. Create a class that you name `Project`.
+3. Add some properties to your model:
+```csharp
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string ProductOwner { get; set; }
+        public List<string> Team { get; set; }
+        public DateTime StartDate { get; set; }
+```
+
+4. Go to `HomeController` and change the `Index` method:
+```csharp
+        public ViewResult Index()
+        {
+            var project = new Project
+            {
+                Id = 1,
+                Name = "Ett projekt",
+                ProductOwner = "Ulf Sidemo",
+                Team = new List<string>
+                {
+                    "Anna Andersson",
+                    "Per Persson",
+                    "Oskar Oskarsson"
+                },
+                StartDate = new DateTime(2019, 9, 2)
+            };
+
+            return View("Index", project.Name);
+        }
+```
+
+5. Go to `Views/Home/Index.cshtml` and use the project name by changing the content to
+```csharp
+        @model string
+
+        <h1>@Model</h1>
+```
+
+6. Compile and run and you should see "Ett projekt"
+
+7. Right now we are just sending the title of the project to the view, but now we are going to change it!
+   Change the controller and the view so that we send and receive the entire Project object.
+
+8. Print the product owner's name, start date, and all team members in the view.
+
+    Razor syntax for typing C# in the view is: `@{ statement }` and `@expression`.
+    See some Razor examples here: https://www.w3schools.com/asp/razor_syntax.asp
+
+    Tip: You can format the date with e.g. `.ToShortDateString()`
+
+9. Create a new model `Consultant` with string property `Name` to represent
+    team members and use it instead of string in the `Team` property in the `Project` model.
+    
+    You can transform the name list you already have into a Consultant list using LINQ:
+    ```csharp
+    Team = new List<string> {/* all names */}.Select(name => new Consultant {Name = name}).ToList();
+    ```
+
+10. Modify the view so that data is printed correctly again
+
+----------------------------------------------------------------
+Lab 4 - Dependency Injection
+----------------------------------------------------------------
+
+Now we will break out and separate parts of the logic that we connect with Dependency Injection.
+
+1. Create a Services folder in the project root and add a file `ConsultantService.cs` with the ConsultantService class
+2. Create the interface `IConsultantService` (create a new file or put it in the same) with
+   the signature of a function `GetAllConsultants()` which returns a list of `Consultant`.
+Let `ConsultantService` implement your interface. Then copy the consultant list from `HomeController` and have `GetAllConsultants()` return it.
+4. Set up `ConsultantService` as a transient implementation of `IConsultantService`.
+   Tip: The `ConfigureServices` method in `Startup.cs`.
+
+   What does that mean? What is the difference between a transient and a singleton implementation?
+
+5. You can now add `IConsultantService` as a dependency to `HomeController`.
+   You do this by adding `IConsultantService` as a parameter in the construktor.
+   If all configuration is correct, the dependency injection framework will now create
+   a new instance of `ConsultantService` as soon as it is needed by `HomeController`.
+```csharp
+        private readonly IConsultantService _consultantService;
+
+        public HomeController(IConsultantService consultantService)
+        {
+            _consultantService = consultantService;
+        }
+```
+
+6. Use `_consultantService` to get all consultants and populate the team list.
+7. Compile and run!
+
+----------------------------------------------------------------
+Lab 5 - Routing and Model binding
+----------------------------------------------------------------
+
+1. Create a new controller `ConsultantController` with action `Index`, a view
+   `Views/Consultant/Index.cshtml` and send a consultant from the controller
+    to the view that prints the consultant. Test run.
+
+2. Create an action `Create` with `[HttpGet]` attribute, and view `Create.cshtml` with a
+    form containing input fields that match the `Consultant` model, either
+    with regular html or with helper methods along the lines of
+```csharp
+@using (Html.BeginForm())
+{
+    @Html.TextBox("Name");
+    <input type="submit" value="Skapa">
+}
+```
+
+3. In your controller, create an action `Create` with `[HttpPost]` attribute and one
+   `Consultant` as an argument (model binding). Return the `Index` view with this.
+4. Test run and go to `/consultant/create` create a new consultant and verify that this is forwarded to
+   Index view. Why do we have two `Create` methods, what are the differences and how do we know which one to run when?
+7. Add `int projectId` as an additional argument to your` Create` action,
+   and create an input field in `Create.cshtml` for just `projectId`.
+   You do not need to use `projectId` for anything in the controller or model.
+8. Run in debug mode (<kbd>F5</kbd> [Win], <kbd>⌘</kbd> + <kbd>⏎</kbd> [Mac]) with a breakpoint in
+   `Create method` and check that you can see both `Consultant` and `projectId` in `Create`.
+
+   What happens if you as a user enter something that is not an int in the form, why?
+
+----------------------------------------------------------------
+Lab 6 - Partial views & Sections
+----------------------------------------------------------------
+
+### Partial Views
+1. Extract the rendering of team members in the `Index` view to a partial view that renders __one__ `Consultant`.
+   The loop must therefore remain in the `Index`. As a naming convention, partial views begin with `_` e.g. `_Consultant.cshtml`.
+2. You must also find a way to "call" the partial view from the `Index` view.
+   Tip: `Html.RenderPartial` or `await Html.RenderPartialAsync`.
+
+### Sections
+2. In `_Layout.cshtml`, add reference to section (hint: `@RenderSection` eg in footer).
+3. In a standard view, add a section that writes a text.
+4. Run. The text should now be visible in the place you specified in the layout view.
+
+How do sections differ from partial views and what are their uses?
+
+----------------------------------------------------------------
+Bonus Lab 7 - Razor Pages
+----------------------------------------------------------------
+
+1. Convert your MVC app to Razor Pages! See https://docs.microsoft.com/en-us/aspnet/core/razor-pages/
+
+----------------------------------------------------------------
+The end
+----------------------------------------------------------------
+
+- You were a fast one! 🏎️💨 
+- Help your neighbour, go back to old labs or solve some excercises on Exercism: https://exercism.io/tracks/csharp/exercises
